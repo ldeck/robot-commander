@@ -1,5 +1,6 @@
 package deck.lachlan.robotics.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public enum Compass {
@@ -17,18 +18,16 @@ public enum Compass {
     }
 
     private Compass moved(int direction) {
-        int startIndex = currentIndex();
-        int endIndex = startIndex + direction;
-        if (endIndex < 0) {
-            endIndex = values().length - 1;
-        }
-        else if (endIndex == values().length) {
-            endIndex = 0;
-        }
-        return values()[endIndex];
-    }
+        List<Compass> items =  new ArrayList<>(List.of(values()));
+        int startIndex = items.indexOf(this);
 
-    private int currentIndex() {
-        return List.of(values()).indexOf(this);
+        // psuedo infinite list either direction
+        items.addAll(List.of(values()));
+        items.addAll(List.of(values()));
+
+        startIndex += values().length;
+
+        int endIndex = startIndex + direction;
+        return items.get(endIndex);
     }
 }
