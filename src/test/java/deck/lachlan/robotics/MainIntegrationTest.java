@@ -109,4 +109,45 @@ class MainIntegrationTest {
             assertThat(out.toString()).isEqualTo("");
         }
     }
+
+    @Nested
+    @DisplayName("place, move and report")
+    @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+    class placeMoveAndReport {
+        public Stream<Arguments> northBoundPossibles() {
+            List<Arguments> coords = new ArrayList<>();
+            for (int i = 0; i < 5; i++) {
+                for (int j = 0; j < 4; j++) {
+                    coords.add(Arguments.arguments(i, j));
+                }
+            }
+            return coords.stream();
+        }
+
+        @ParameterizedTest
+        @MethodSource("northBoundPossibles")
+        @DisplayName("can move when placed inside bounds")
+        void canMoveNorthWhenPlacedInsideBounds(int x, int y) {
+            String instructions = String.join("\n",
+                String.format("PLACE %s,NORTH", new Position(x, y)),
+                "MOVE",
+                "REPORT"
+            );
+
+            ByteArrayInputStream testInput = new ByteArrayInputStream(instructions.getBytes());
+            System.setIn(testInput);
+
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            PrintStream testOutput = new PrintStream(out);
+            System.setOut(testOutput);
+
+            Main.main(new String[0]);
+
+            assertThat(out.toString()).isEqualTo(String.format("%s,%s,%s\n",
+                x,
+                y + 1,
+                "NORTH"
+            ));
+        }
+    }
 }

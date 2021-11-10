@@ -15,6 +15,9 @@ public class InstructionFactory {
         if ("report".equals(input)) {
             return Optional.of(new ReportInstruction(outStream));
         }
+        else if ("move".equals(input)) {
+            return Optional.of(new MoveInstruction());
+        }
         return Optional.of(new PlaceInstruction(input));
     }
 }

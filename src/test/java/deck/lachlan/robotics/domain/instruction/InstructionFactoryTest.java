@@ -37,6 +37,13 @@ class InstructionFactoryTest {
     }
 
     @Test
+    @DisplayName("should support move instructions")
+    void shouldSupportMoveInstructions() {
+        assertThat(subject.instructionFor("move"))
+            .contains(new MoveInstruction());
+    }
+
+    @Test
     @DisplayName("should support report instructions")
     void shouldSupportReportInstructions() {
         assertThat(subject.instructionFor("report"))

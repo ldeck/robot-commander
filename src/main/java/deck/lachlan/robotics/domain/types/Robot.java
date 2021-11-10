@@ -24,6 +24,7 @@ public class Robot {
     }
 
     public Robot moved() {
-        return null;
+        Position newPosition = position.moved(compass);
+        return new Robot(newPosition, compass);
     }
 }

@@ -15,4 +15,16 @@ public class Position {
     public String toString() {
         return String.format("%s,%s", x, y);
     }
+
+    public Position moved(Compass compass) {
+        int newX = x;
+        int newY = y;
+        switch (compass) {
+            case NORTH: newY++; break;
+            case EAST: newX++; break;
+            case SOUTH: newY--; break;
+            default: newX--; break;
+        }
+        return new Position(newX, newY);
+    }
 }

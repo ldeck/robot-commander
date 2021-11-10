@@ -25,6 +25,23 @@ class PositionTest {
     }
 
     @Nested
+    @DisplayName("moved")
+    class moved {
+        @ParameterizedTest
+        @CsvSource({
+            "1,1,NORTH,1,2",
+            "1,1,EAST,2,1",
+            "1,1,SOUTH,1,0",
+            "1,1,WEST,0,1",
+        })
+        @DisplayName("should move in the direction provided")
+        void shouldMoveInTheDirectionProvided(int x, int y, Compass compass, int newX, int newY) {
+            assertThat(new Position(x, y).moved(compass))
+            .isEqualTo(new Position(newX, newY));
+        }
+    }
+
+    @Nested
     @DisplayName("toString")
     class toString {
         @ParameterizedTest

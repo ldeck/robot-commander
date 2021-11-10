@@ -3,11 +3,16 @@ package deck.lachlan.robotics.domain.types;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 class RobotTest {
 
     @Nested
@@ -56,6 +61,22 @@ class RobotTest {
             Robot robot = new Robot(new Position(row, col), compass);
             assertThat(robot.getBearingsIfAvailable())
                 .contains(String.format("%s,%s,%s", row, col, compass));
+        }
+    }
+
+    @Nested
+    @DisplayName("moved")
+    class moved {
+        @Test
+        @DisplayName("should return new robot with adjusted position via compass")
+        void shouldReturnNewRobotWithAdjustedPositionViaCompass(
+            @Mock Position position,
+            @Mock Position newPosition,
+            @Mock Compass compass
+        ) {
+            Robot robot = new Robot(position, compass);
+            when(position.moved(compass)).thenReturn(newPosition);
+            assertThat(robot.moved()).isEqualTo(new Robot(newPosition, compass));
         }
     }
 }
