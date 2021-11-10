@@ -249,5 +249,31 @@ class MainIntegrationTest {
 
             assertThat(testOutput.toString()).isEqualTo("3,3,NORTH\n");
         }
+
+        @Test
+        @DisplayName("scenario d - ignore invalid instructions")
+        void scenarioDIgnoreInvalidInstructions() {
+            setupSystemIOWith(String.join("\n",
+                "MOVE",
+                "LEFT",
+                "PLACE 5,6,NORTH",
+                "PLACE 1,2,3,4 NEST",
+
+                "PLACE 1,2,EAST",
+                "PLACE 5,6,NORTH",
+                "PLACED 1,2,3,4 NEST",
+                "FIND",
+
+                "MOVE",
+                "MOVE",
+                "LEFT",
+                "MOVE",
+                "REPORT"
+            ));
+
+            Main.main(new String[0]);
+
+            assertThat(testOutput.toString()).isEqualTo("3,3,NORTH\n");
+        }
     }
 }

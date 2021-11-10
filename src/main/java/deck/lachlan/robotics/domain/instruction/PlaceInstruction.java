@@ -16,16 +16,21 @@ public class PlaceInstruction implements Instruction {
 
     @Override
     public void attemptRobotOperation(Table table) {
-        String[] coords = instruction.split(",");
-
-        int x = -1;
-        if (coords[0].matches("^place \\d")) {
-            x = Integer.parseInt(coords[0].split(" ")[1]);
+        String trimmed = instruction.trim();
+        if (!trimmed.matches("^place\\s+\\d\\s*,\\s*\\d\\s*,\\s*\\w+$")) {
+            return;
         }
 
-        final int y = Integer.parseInt(coords[1]);
+        String[] coords = trimmed.split("\\s*,\\s*");
 
-        Optional<Compass> possibleCompass = Compass.findCompass(coords[2]);
+        int x = -1;
+        if (coords[0].matches("^place\\s+\\d")) {
+            x = Integer.parseInt(coords[0].split("\\s+")[1]);
+        }
+
+        final int y = Integer.parseInt(coords[1].trim());
+
+        Optional<Compass> possibleCompass = Compass.findCompass(coords[2].trim());
 
         int finalX = x;
         possibleCompass.ifPresent(compass -> {
