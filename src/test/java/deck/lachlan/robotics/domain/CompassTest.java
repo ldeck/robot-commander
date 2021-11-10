@@ -10,8 +10,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 class CompassTest {
 
     @Nested
-    @DisplayName("move left")
-    class moveLeft {
+    @DisplayName("turn left")
+    class turnLeft {
         @ParameterizedTest
         @CsvSource({
             "north, west",
@@ -24,6 +24,24 @@ class CompassTest {
             Compass start = Compass.valueOf(startDirection.toUpperCase());
             Compass expected = Compass.valueOf(expectedDirection.toUpperCase());
             assertThat(start.left()).isEqualTo(expected);
+        }
+    }
+
+    @Nested
+    @DisplayName("turn right")
+    class turnRight {
+        @ParameterizedTest
+        @CsvSource({
+            "north, east",
+            "east, south",
+            "south, west",
+            "west, north"
+        })
+        @DisplayName("should move compass clockwise")
+        void shouldMoveCompassClockwise(String startDirection, String expectedDirection) {
+            Compass start = Compass.valueOf(startDirection.toUpperCase());
+            Compass expected = Compass.valueOf(expectedDirection.toUpperCase());
+            assertThat(start.right()).isEqualTo(expected);
         }
     }
 }
