@@ -5,13 +5,18 @@ import lombok.SneakyThrows;
 import java.io.InputStream;
 
 public class RobotController {
+    private final Table table;
+    private final Interpreter interpreter;
+
+    public RobotController(Table table, Interpreter interpreter) {
+        this.table = table;
+        this.interpreter = interpreter;
+    }
 
     @SneakyThrows
     public void readInstructions(InputStream io) {
-        io.available();
-    }
-
-    public Position position() {
-        return new Position(0, 0);
+        interpreter
+            .instructionOperators(io)
+            .forEach(instruction -> instruction.attemptRobotOperation(table));
     }
 }
