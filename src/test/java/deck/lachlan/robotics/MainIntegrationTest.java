@@ -19,6 +19,7 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -114,22 +115,41 @@ class MainIntegrationTest {
     @DisplayName("place, move and report")
     @TestInstance(TestInstance.Lifecycle.PER_CLASS)
     class placeMoveAndReport {
+        private Stream<Arguments> xySlices(int startX, int maxX, int startY, int maxY, Compass compass, int deltaX, int deltaY) {
+            return IntStream.range(startX, maxX)
+                .boxed()
+                .flatMap(x -> IntStream.range(startY, maxY)
+                        .boxed()
+                        .map(y -> Arguments.arguments(x, y, compass, deltaX, deltaY)));
+        }
+
         public Stream<Arguments> northBoundPossibles() {
-            List<Arguments> coords = new ArrayList<>();
-            for (int i = 0; i < 5; i++) {
-                for (int j = 0; j < 4; j++) {
-                    coords.add(Arguments.arguments(i, j));
-                }
-            }
-            return coords.stream();
+            return xySlices(0, 5, 0,4, Compass.NORTH, 0, 1);
+        }
+
+        public Stream<Arguments> southBoundPossibles() {
+            return xySlices(0, 5, 1,5, Compass.SOUTH, 0, -1);
+        }
+
+        public Stream<Arguments> eastBoundPossibles() {
+            return xySlices(0, 4, 0,5, Compass.EAST, 1, 0);
+        }
+
+        public Stream<Arguments> westBoundPossibles() {
+            return xySlices(1, 5, 0,5, Compass.WEST, -1, 0);
         }
 
         @ParameterizedTest
-        @MethodSource("northBoundPossibles")
+        @MethodSource({
+            "northBoundPossibles",
+            "southBoundPossibles",
+            "eastBoundPossibles",
+            "westBoundPossibles"
+        })
         @DisplayName("can move when placed inside bounds")
-        void canMoveNorthWhenPlacedInsideBounds(int x, int y) {
+        void canMoveWhenPlacedInsideBounds(int x, int y, Compass compass, int deltaX, int deltaY) {
             String instructions = String.join("\n",
-                String.format("PLACE %s,NORTH", new Position(x, y)),
+                String.format("PLACE %s,%S", new Position(x, y), compass),
                 "MOVE",
                 "REPORT"
             );
@@ -144,9 +164,9 @@ class MainIntegrationTest {
             Main.main(new String[0]);
 
             assertThat(out.toString()).isEqualTo(String.format("%s,%s,%s\n",
-                x,
-                y + 1,
-                "NORTH"
+                x + deltaX,
+                y + deltaY,
+                compass
             ));
         }
     }
