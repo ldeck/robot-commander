@@ -27,4 +27,8 @@ public class Robot {
         Position newPosition = position.moved(compass);
         return new Robot(newPosition, compass);
     }
+
+    public Robot rotated(Rotate rotation) {
+        return new Robot(position, compass.rotated(rotation));
+    }
 }

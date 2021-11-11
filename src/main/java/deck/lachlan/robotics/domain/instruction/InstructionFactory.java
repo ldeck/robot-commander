@@ -1,9 +1,11 @@
 package deck.lachlan.robotics.domain.instruction;
 
+import deck.lachlan.robotics.domain.types.Rotate;
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 
 import java.io.PrintStream;
+import java.util.List;
 import java.util.Optional;
 
 @EqualsAndHashCode
@@ -17,6 +19,10 @@ public class InstructionFactory {
         }
         else if ("move".equals(input)) {
             return Optional.of(new MoveInstruction());
+        }
+        else if (List.of("left", "right").contains(input)) {
+            Rotate rotate = Rotate.valueOf(input.toUpperCase());
+            return Optional.of(new RotateInstruction(rotate));
         }
         return Optional.of(new PlaceInstruction(input));
     }

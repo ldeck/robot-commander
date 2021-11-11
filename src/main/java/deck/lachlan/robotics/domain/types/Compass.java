@@ -38,4 +38,10 @@ public enum Compass {
         int endIndex = startIndex + direction;
         return items.get(endIndex);
     }
+
+    public Compass rotated(Rotate rotation) {
+        return Rotate.LEFT == rotation
+            ? left()
+            : right();
+    }
 }

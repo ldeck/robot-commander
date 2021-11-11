@@ -79,4 +79,21 @@ class RobotTest {
             assertThat(robot.moved()).isEqualTo(new Robot(newPosition, compass));
         }
     }
+
+    @Nested
+    @DisplayName("rotated")
+    class rotated {
+        @Test
+        @DisplayName("should return new robot with the given rotation applied")
+        void shouldReturnNewRobotWithTheGivenRotationApplied(
+            @Mock Position position,
+            @Mock Compass compass,
+            @Mock Rotate rotation,
+            @Mock Compass rotatedCompass
+        ) {
+            Robot robot = new Robot(position, compass);
+            when(compass.rotated(rotation)).thenReturn(rotatedCompass);
+            assertThat(robot.rotated(rotation)).isEqualTo(new Robot(position, rotatedCompass));
+        }
+    }
 }

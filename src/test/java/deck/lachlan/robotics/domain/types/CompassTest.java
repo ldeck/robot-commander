@@ -29,8 +29,8 @@ class CompassTest {
     }
 
     @Nested
-    @DisplayName("turn left")
-    class turnLeft {
+    @DisplayName("left")
+    class left {
         @ParameterizedTest
         @CsvSource({
             "north, west",
@@ -44,11 +44,25 @@ class CompassTest {
             Compass expected = Compass.valueOf(expectedDirection.toUpperCase());
             assertThat(start.left()).isEqualTo(expected);
         }
+
+        @ParameterizedTest
+        @CsvSource({
+            "north, west",
+            "east, north",
+            "south, east",
+            "west, south"
+        })
+        @DisplayName("should use left rotation to move compass anti-clockwise")
+        void shouldUseLeftRotationToMoveCompassAntiClockwise(String startDirection, String expectedDirection) {
+            Compass start = Compass.valueOf(startDirection.toUpperCase());
+            Compass expected = Compass.valueOf(expectedDirection.toUpperCase());
+            assertThat(start.rotated(Rotate.LEFT)).isEqualTo(expected);
+        }
     }
 
     @Nested
-    @DisplayName("turn right")
-    class turnRight {
+    @DisplayName("right")
+    class right {
         @ParameterizedTest
         @CsvSource({
             "north, east",
@@ -61,6 +75,20 @@ class CompassTest {
             Compass start = Compass.valueOf(startDirection.toUpperCase());
             Compass expected = Compass.valueOf(expectedDirection.toUpperCase());
             assertThat(start.right()).isEqualTo(expected);
+        }
+
+        @ParameterizedTest
+        @CsvSource({
+            "north, east",
+            "east, south",
+            "south, west",
+            "west, north"
+        })
+        @DisplayName("should use right rotation to move compass clockwise")
+        void shouldUseRightRotationToMoveCompassClockwise(String startDirection, String expectedDirection) {
+            Compass start = Compass.valueOf(startDirection.toUpperCase());
+            Compass expected = Compass.valueOf(expectedDirection.toUpperCase());
+            assertThat(start.rotated(Rotate.RIGHT)).isEqualTo(expected);
         }
     }
 }
