@@ -2,14 +2,25 @@ package deck.lachlan.robotics.domain;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.io.PrintStream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@ExtendWith(MockitoExtension.class)
 class InstructionFactoryTest {
 
-    InstructionFactory subject = new InstructionFactory();
+    @InjectMocks
+    InstructionFactory subject;
+
+    @Mock
+    PrintStream outStream;
 
     @ParameterizedTest
     @ValueSource(strings = {
@@ -29,6 +40,6 @@ class InstructionFactoryTest {
     @DisplayName("should support report instructions")
     void shouldSupportReportInstructions() {
         assertThat(subject.instructionFor("report"))
-            .contains(new ReportInstruction());
+            .contains(new ReportInstruction(outStream));
     }
 }

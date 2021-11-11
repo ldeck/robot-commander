@@ -47,7 +47,7 @@ class MainIntegrationTest {
 
         Main.main(new String[0]);
 
-        assertThat(out.toString()).isEqualTo("0,0,NORTH");
+        assertThat(out.toString()).isEqualTo("0,0,NORTH\n");
     }
 
 }

@@ -1,14 +1,25 @@
 package deck.lachlan.robotics.domain;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import lombok.Value;
 
-@EqualsAndHashCode
-@Getter
+import java.util.Optional;
+
+@Value
 public class Robot {
-    private Position position;
+    Position position;
+    Compass compass;
 
-    public Robot() {
-        this.position = new Position(-1, -1);
+    public static Robot unplacedRobot() {
+        return new Robot(
+            new Position(-1, -1),
+            null
+        );
+    }
+
+    public Optional<String> getBearingsIfAvailable() {
+        if (compass == null || !position.isValid()) {
+            return Optional.empty();
+        }
+        return Optional.of(String.format("%s,%s", position, compass));
     }
 }

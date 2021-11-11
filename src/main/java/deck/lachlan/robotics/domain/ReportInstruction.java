@@ -12,8 +12,8 @@ public class ReportInstruction implements Instruction {
 
     @Override
     public void attemptRobotOperation(Table table) {
-        table.getRobot()
-            .getBearingsIfAvailable()
+        table.findRobot()
+            .flatMap(Robot::getBearingsIfAvailable)
             .ifPresent(outStream::println);
     }
 }

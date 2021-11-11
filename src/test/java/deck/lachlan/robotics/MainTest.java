@@ -12,7 +12,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.MockedConstruction;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -28,8 +27,8 @@ class MainTest {
         try (MockedConstruction<RobotController> mocked = mockConstruction(RobotController.class,
             (mock, context) -> {
                 assertThat(context.arguments()).isEqualTo(List.of(
-                    new Table(5, new Robot()),
-                    new Interpreter(new InstructionFactory(), new TrimmedIOReader())
+                    new Table(5),
+                    new Interpreter(new InstructionFactory(System.out), new TrimmedIOReader())
                 ));
             })) {
 

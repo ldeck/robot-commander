@@ -27,7 +27,7 @@ class ReportInstructionTest {
     @Test
     @DisplayName("should report the position of the robot when it has its bearings")
     void shouldReportThePositionOfTheRobotWhenItHasItsBearings(@Mock Table table, @Mock Robot robot) {
-        when(table.getRobot()).thenReturn(robot);
+        when(table.findRobot()).thenReturn(Optional.of(robot));
         when(robot.getBearingsIfAvailable()).thenReturn(Optional.of("0,0,NORTH"));
 
         subject.attemptRobotOperation(table);
@@ -38,7 +38,7 @@ class ReportInstructionTest {
     @Test
     @DisplayName("should not report anything when robot does not have its bearings")
     void shouldNotReportAnythingWhenRobotDoesNotHaveItsBearings(@Mock Table table, @Mock Robot robot) {
-        when(table.getRobot()).thenReturn(robot);
+        when(table.findRobot()).thenReturn(Optional.of(robot));
         when(robot.getBearingsIfAvailable()).thenReturn(Optional.empty());
 
         subject.attemptRobotOperation(table);

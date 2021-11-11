@@ -1,17 +1,14 @@
 package deck.lachlan.robotics.domain;
 
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 
 import java.io.InputStream;
 
+@RequiredArgsConstructor
 public class RobotController {
     private final Table table;
     private final Interpreter interpreter;
-
-    public RobotController(Table table, Interpreter interpreter) {
-        this.table = table;
-        this.interpreter = interpreter;
-    }
 
     @SneakyThrows
     public void readInstructions(InputStream io) {
