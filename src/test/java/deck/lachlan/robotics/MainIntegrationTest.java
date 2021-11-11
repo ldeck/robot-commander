@@ -7,6 +7,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -198,6 +199,55 @@ class MainIntegrationTest {
                 y,
                 expectedCompass
             ));
+        }
+    }
+
+    @Nested
+    @DisplayName("scenarios")
+    class scenarios {
+        @Test
+        @DisplayName("scenario a")
+        void scenarioA() {
+            setupSystemIOWith(String.join("\n",
+                "PLACE 0,0,NORTH",
+                "MOVE",
+                "REPORT"
+            ));
+
+            Main.main(new String[0]);
+
+            assertThat(testOutput.toString()).isEqualTo("0,1,NORTH\n");
+        }
+
+        @Test
+        @DisplayName("scenario b")
+        void scenarioB() {
+            setupSystemIOWith(String.join("\n",
+                "PLACE 0,0,NORTH",
+                "LEFT",
+                "REPORT"
+            ));
+
+            Main.main(new String[0]);
+
+            assertThat(testOutput.toString()).isEqualTo("0,0,WEST\n");
+        }
+
+        @Test
+        @DisplayName("scenario c")
+        void scenarioC() {
+            setupSystemIOWith(String.join("\n",
+                "PLACE 1,2,EAST",
+                "MOVE",
+                "MOVE",
+                "LEFT",
+                "MOVE",
+                "REPORT"
+            ));
+
+            Main.main(new String[0]);
+
+            assertThat(testOutput.toString()).isEqualTo("3,3,NORTH\n");
         }
     }
 }
