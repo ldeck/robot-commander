@@ -1,9 +1,12 @@
-package deck.lachlan.robotics.domain;
+package deck.lachlan.robotics.domain.instruction;
 
+import deck.lachlan.robotics.domain.types.Compass;
+import deck.lachlan.robotics.domain.types.Position;
+import deck.lachlan.robotics.domain.types.Robot;
+import deck.lachlan.robotics.domain.types.Table;
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 
-import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor

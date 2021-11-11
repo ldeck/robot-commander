@@ -1,4 +1,4 @@
-package deck.lachlan.robotics.domain;
+package deck.lachlan.robotics.domain.io;
 
 import lombok.EqualsAndHashCode;
 

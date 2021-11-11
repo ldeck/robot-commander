@@ -1,5 +1,9 @@
-package deck.lachlan.robotics.domain;
+package deck.lachlan.robotics.domain.instruction;
 
+import deck.lachlan.robotics.domain.types.Compass;
+import deck.lachlan.robotics.domain.types.Position;
+import deck.lachlan.robotics.domain.types.Robot;
+import deck.lachlan.robotics.domain.types.Table;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -12,7 +16,8 @@ import static org.mockito.Mockito.verify;
 @ExtendWith(MockitoExtension.class)
 class PlaceInstructionTest {
 
-    @Mock Table table;
+    @Mock
+    Table table;
 
     @ParameterizedTest
     @CsvSource({

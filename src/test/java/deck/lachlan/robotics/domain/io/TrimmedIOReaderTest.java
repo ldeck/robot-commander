@@ -1,4 +1,4 @@
-package deck.lachlan.robotics.domain;
+package deck.lachlan.robotics.domain.io;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

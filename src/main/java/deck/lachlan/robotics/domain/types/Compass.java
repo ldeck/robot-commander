@@ -1,10 +1,9 @@
-package deck.lachlan.robotics.domain;
+package deck.lachlan.robotics.domain.types;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public enum Compass {
     NORTH,

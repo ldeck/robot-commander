@@ -1,5 +1,7 @@
-package deck.lachlan.robotics.domain;
+package deck.lachlan.robotics.domain.control;
 
+import deck.lachlan.robotics.domain.io.Interpreter;
+import deck.lachlan.robotics.domain.types.Table;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 

@@ -1,4 +1,4 @@
-package deck.lachlan.robotics.domain;
+package deck.lachlan.robotics.domain.types;
 
 import lombok.Value;
 
@@ -21,5 +21,9 @@ public class Robot {
             return Optional.empty();
         }
         return Optional.of(String.format("%s,%s", position, compass));
+    }
+
+    public Robot moved() {
+        return null;
     }
 }

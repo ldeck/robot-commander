@@ -1,5 +1,7 @@
-package deck.lachlan.robotics.domain;
+package deck.lachlan.robotics.domain.io;
 
+import deck.lachlan.robotics.domain.instruction.Instruction;
+import deck.lachlan.robotics.domain.instruction.InstructionFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,8 +23,10 @@ class InterpreterTest {
     @InjectMocks
     Interpreter subject;
 
-    @Mock InstructionFactory instructionFactory;
-    @Mock TrimmedIOReader ioReader;
+    @Mock
+    InstructionFactory instructionFactory;
+    @Mock
+    TrimmedIOReader ioReader;
 
     @Test
     @DisplayName("should do nothing when no instructions to interpret")

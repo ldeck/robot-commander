@@ -1,10 +1,10 @@
 package deck.lachlan.robotics;
 
-import deck.lachlan.robotics.domain.InstructionFactory;
-import deck.lachlan.robotics.domain.Interpreter;
-import deck.lachlan.robotics.domain.RobotController;
-import deck.lachlan.robotics.domain.Table;
-import deck.lachlan.robotics.domain.TrimmedIOReader;
+import deck.lachlan.robotics.domain.control.RobotController;
+import deck.lachlan.robotics.domain.instruction.InstructionFactory;
+import deck.lachlan.robotics.domain.io.Interpreter;
+import deck.lachlan.robotics.domain.io.TrimmedIOReader;
+import deck.lachlan.robotics.domain.types.Table;
 
 public class Main {
     public static void main(String[] args) {

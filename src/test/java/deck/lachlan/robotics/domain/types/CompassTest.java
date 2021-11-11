@@ -1,4 +1,4 @@
-package deck.lachlan.robotics.domain;
+package deck.lachlan.robotics.domain.types;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

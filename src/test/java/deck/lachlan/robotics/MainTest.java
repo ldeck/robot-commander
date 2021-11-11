@@ -1,11 +1,10 @@
 package deck.lachlan.robotics;
 
-import deck.lachlan.robotics.domain.InstructionFactory;
-import deck.lachlan.robotics.domain.Interpreter;
-import deck.lachlan.robotics.domain.Robot;
-import deck.lachlan.robotics.domain.RobotController;
-import deck.lachlan.robotics.domain.Table;
-import deck.lachlan.robotics.domain.TrimmedIOReader;
+import deck.lachlan.robotics.domain.control.RobotController;
+import deck.lachlan.robotics.domain.instruction.InstructionFactory;
+import deck.lachlan.robotics.domain.io.Interpreter;
+import deck.lachlan.robotics.domain.io.TrimmedIOReader;
+import deck.lachlan.robotics.domain.types.Table;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

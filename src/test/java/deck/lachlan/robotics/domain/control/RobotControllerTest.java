@@ -1,5 +1,7 @@
-package deck.lachlan.robotics.domain;
+package deck.lachlan.robotics.domain.control;
 
+import deck.lachlan.robotics.domain.io.Interpreter;
+import deck.lachlan.robotics.domain.types.Table;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -19,8 +21,10 @@ class RobotControllerTest {
     @InjectMocks
     RobotController subject;
 
-    @Mock Table table;
-    @Mock Interpreter interpreter;
+    @Mock
+    Table table;
+    @Mock
+    Interpreter interpreter;
 
     @Nested
     @DisplayName("when no instructions to read")
