@@ -18,6 +18,12 @@ public class Table {
     }
 
     public void tryPlaceRobot(Robot robot) {
-        this.robot = robot;
+        if (robot.getCompass() != null
+            && robot.getPosition().isPotentiallyValid()
+            && robot.getPosition().getX() < width
+            && robot.getPosition().getY() < width
+        ) {
+            this.robot = robot;
+        }
     }
 }

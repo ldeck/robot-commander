@@ -20,7 +20,7 @@ class PositionTest {
         })
         @DisplayName("should return true when both coordinates are positive")
         void shouldReturnTrueWhenBothCoordinatesArePositive(int x, int y, boolean expected) {
-            assertThat(new Position(x, y).isValid()).isEqualTo(expected);
+            assertThat(new Position(x, y).isPotentiallyValid()).isEqualTo(expected);
         }
     }
 

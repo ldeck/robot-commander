@@ -1,17 +1,24 @@
 package deck.lachlan.robotics;
 
+import deck.lachlan.robotics.domain.Compass;
+import deck.lachlan.robotics.domain.Position;
+import deck.lachlan.robotics.domain.Robot;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -32,48 +39,73 @@ class MainIntegrationTest {
         System.setOut(systemOut);
     }
 
-    @Test
-    @DisplayName("should be able to set robot on table")
-    void shouldBeAbleToSetRobotOnTable() {
-        String instructions = String.join("\n",
-            "PLACE 0,0,NORTH",
-            "REPORT"
-        );
+    @Nested
+    @DisplayName("place and report")
+    @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+    class placeAndReport {
 
-        ByteArrayInputStream testInput = new ByteArrayInputStream(instructions.getBytes());
-        System.setIn(testInput);
+        public Stream<Robot> validRobots() {
+            List<Robot> robots = new ArrayList<>();
+            for (int i = 0; i < 5; i++) {
+                for (int j = 0; j < 5; j++) {
+                    for (int k = 0; k < Compass.values().length; k++) {
+                        robots.add(new Robot(new Position(i, j), Compass.values()[k]));
+                    }
+                }
+            }
+            return robots.stream();
+        }
 
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        PrintStream testOutput = new PrintStream(out);
-        System.setOut(testOutput);
+        @ParameterizedTest
+        @MethodSource("validRobots")
+        @DisplayName("should be able to set robot on table")
+        void shouldBeAbleToSetRobotOnTable(Robot robot) {
+            String instructions = String.join("\n",
+                String.format("PLACE %s,%s", robot.getPosition(), robot.getCompass()),
+                "REPORT"
+            );
 
-        Main.main(new String[0]);
+            ByteArrayInputStream testInput = new ByteArrayInputStream(instructions.getBytes());
+            System.setIn(testInput);
 
-        assertThat(out.toString()).isEqualTo("0,0,NORTH\n");
-    }
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            PrintStream testOutput = new PrintStream(out);
+            System.setOut(testOutput);
 
-    @ParameterizedTest
-    @CsvSource({
-        "-1,0,NORTH",
-        "0,-1,NORTH",
-        "0,0,BOOVE",
-    })
-    @DisplayName("should ignore an invalid placement")
-    void shouldIgnoreAnInvalidPlacement(int x, int y, String compass) {
-        String instructions = String.join("\n",
-            String.format("PLACE %s,%s,%s", x, y, compass),
-            "REPORT"
-        );
+            Main.main(new String[0]);
 
-        ByteArrayInputStream testInput = new ByteArrayInputStream(instructions.getBytes());
-        System.setIn(testInput);
+            assertThat(out.toString()).isEqualTo(String.format("%s,%s,%s\n",
+                robot.getPosition().getX(),
+                robot.getPosition().getY(),
+                robot.getCompass()
+            ));
+        }
 
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        PrintStream testOutput = new PrintStream(out);
-        System.setOut(testOutput);
+        @ParameterizedTest
+        @CsvSource({
+            "-1,0,NORTH",
+            "0,-1,NORTH",
+            "5,0,NORTH",
+            "0,5,NORTH",
+            "0,0,BOOVE",
+        })
+        @DisplayName("should ignore an invalid placement")
+        void shouldIgnoreAnInvalidPlacement(int x, int y, String compass) {
+            String instructions = String.join("\n",
+                String.format("PLACE %s,%s,%s", x, y, compass),
+                "REPORT"
+            );
 
-        Main.main(new String[0]);
+            ByteArrayInputStream testInput = new ByteArrayInputStream(instructions.getBytes());
+            System.setIn(testInput);
 
-        assertThat(out.toString()).isEqualTo("");
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            PrintStream testOutput = new PrintStream(out);
+            System.setOut(testOutput);
+
+            Main.main(new String[0]);
+
+            assertThat(out.toString()).isEqualTo("");
+        }
     }
 }

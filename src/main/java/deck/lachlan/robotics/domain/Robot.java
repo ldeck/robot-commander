@@ -17,7 +17,7 @@ public class Robot {
     }
 
     public Optional<String> getBearingsIfAvailable() {
-        if (compass == null || !position.isValid()) {
+        if (compass == null || !position.isPotentiallyValid()) {
             return Optional.empty();
         }
         return Optional.of(String.format("%s,%s", position, compass));

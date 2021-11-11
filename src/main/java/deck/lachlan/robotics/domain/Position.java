@@ -7,7 +7,7 @@ public class Position {
     int x;
     int y;
 
-    public boolean isValid() {
+    public boolean isPotentiallyValid() {
         return x >= 0 && y >= 0;
     }
 
