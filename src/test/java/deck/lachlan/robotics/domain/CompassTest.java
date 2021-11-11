@@ -2,12 +2,31 @@ package deck.lachlan.robotics.domain;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.EnumSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class CompassTest {
+
+    @Nested
+    @DisplayName("find")
+    class find {
+        @ParameterizedTest
+        @EnumSource(Compass.class)
+        @DisplayName("should return compass by lowercase name")
+        void shouldReturnCompassByLowercaseName(Compass compass) {
+            assertThat(Compass.findCompass(compass.name().toLowerCase())).contains(compass);
+        }
+
+        @Test
+        @DisplayName("should return empty for bogus compass values")
+        void shouldReturnEmptyForBogusCompassValues() {
+            assertThat(Compass.findCompass("foo")).isEmpty();
+        }
+    }
 
     @Nested
     @DisplayName("turn left")

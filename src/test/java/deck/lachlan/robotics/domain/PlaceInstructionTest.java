@@ -23,7 +23,7 @@ class PlaceInstructionTest {
     })
     @DisplayName("should place robot for valid positions")
     void shouldPlaceRobotForValidPositions(int x, int y, String compass) {
-        String rawInstruction = String.format("%s,%s,%s", x, y, compass);
+        String rawInstruction = String.format("place %s,%s,%s", x, y, compass);
         PlaceInstruction instruction = new PlaceInstruction(rawInstruction);
 
         instruction.attemptRobotOperation(table);

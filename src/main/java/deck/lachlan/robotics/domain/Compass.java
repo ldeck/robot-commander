@@ -1,13 +1,22 @@
 package deck.lachlan.robotics.domain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public enum Compass {
     NORTH,
     EAST,
     SOUTH,
     WEST;
+
+    public static Optional<Compass> findCompass(String name) {
+        return Arrays.stream(values())
+            .filter(compass -> compass.name().equalsIgnoreCase(name))
+            .findFirst();
+    }
 
     public Compass left() {
         return moved(-1);

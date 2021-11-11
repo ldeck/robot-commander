@@ -3,6 +3,9 @@ package deck.lachlan.robotics.domain;
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+import java.util.Optional;
+
 @RequiredArgsConstructor
 @EqualsAndHashCode
 public class PlaceInstruction implements Instruction {
@@ -12,11 +15,25 @@ public class PlaceInstruction implements Instruction {
     public void attemptRobotOperation(Table table) {
         String[] coords = instruction.split(",");
 
-        int x = Integer.parseInt(coords[0]);
-        int y = Integer.parseInt(coords[1]);
-        Compass compass = Compass.valueOf(coords[2].toUpperCase());
+        int x = -1;
+        if (coords[0].matches("^place \\d")) {
+            x = Integer.parseInt(coords[0].split(" ")[1]);
+        }
 
-        Robot robot = new Robot(new Position(x, y), compass);
-        table.tryPlaceRobot(robot);
+        final int y = Integer.parseInt(coords[1]);
+
+        Optional<Compass> possibleCompass = Compass.findCompass(coords[2]);
+
+        int finalX = x;
+        possibleCompass.ifPresent(compass -> {
+            final Robot robot = new Robot(
+                new Position(
+                    finalX,
+                    y
+                ),
+                compass
+            );
+            table.tryPlaceRobot(robot);
+        });
     }
 }
